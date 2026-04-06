@@ -1,0 +1,67 @@
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate, useParams } from 'react-router-dom';
+import { useAuth } from './context/AuthContext';
+import { LangProvider } from './context/LangContext';
+import { BookingProvider } from './components/BookingContext';
+import Header from './components/Header';
+import Hero from './components/Hero';
+import Login from './components/Login';
+import AdminDashboard from './components/AdminDashboard';
+import CarsList from './components/CarsList';
+import Offices from './components/Offices';
+import Contact from './components/Contact';
+import FAQ from './components/FAQ';
+import StaticPage from './components/StaticPage';
+import Footer from './components/Footer';
+
+const ProtectedRoute = ({ children, adminOnly }) => {
+  const { user, loading } = useAuth();
+
+  if (loading) return <div>Loading...</div>;
+
+  if (!user) return <Navigate to="/login" />;
+  if (adminOnly && user.role !== 'admin') return <Navigate to="/" />;
+
+  return children;
+};
+
+const StaticPageWrapper = () => {
+  const params = useParams();
+  return <StaticPage page={params.page} />;
+};
+
+function AppContent() {
+  return (
+    <LangProvider>
+      <BookingProvider>
+        <Router>
+          <div className="min-h-screen bg-white">
+            <Header />
+            <main>
+              <Routes>
+                <Route path="/login" element={<Login />} />
+                <Route path="/admin" element={<ProtectedRoute adminOnly><AdminDashboard /></ProtectedRoute>} />
+                <Route path="/" element={<ProtectedRoute><Hero /></ProtectedRoute>} />
+                <Route path="/cars" element={<ProtectedRoute><CarsList /></ProtectedRoute>} />
+                <Route path="/offices" element={<ProtectedRoute><Offices /></ProtectedRoute>} />
+                <Route path="/contact" element={<ProtectedRoute><Contact /></ProtectedRoute>} />
+                <Route path="/faq" element={<ProtectedRoute><FAQ /></ProtectedRoute>} />
+                <Route path="/:page" element={<ProtectedRoute><StaticPageWrapper /></ProtectedRoute>} />
+                <Route path="*" element={<Navigate to="/login" />} />
+              </Routes>
+            </main>
+            <Footer />
+          </div>
+        </Router>
+      </BookingProvider>
+    </LangProvider>
+  );
+}
+
+function App() {
+  return <AppContent />;
+}
+
+export default App;
+
+

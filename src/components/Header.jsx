@@ -1,0 +1,86 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { useLang } from '../context/LangContext';
+import { useAuth } from '../context/AuthContext';
+
+const ChevronDown = () => (
+  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+  </svg>
+);
+
+const Header = () => {
+  const { lang, setLang, t, langs } = useLang();
+  const { user, logout } = useAuth();
+
+  const navLinks = ['cars', 'offices', 'contact', 'faq'];
+
+  return (
+    <header className="w-full bg-white sticky top-0 z-50 shadow-sm">
+      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+        <Link to={user ? '/' : '/login'} className="text-4xl font-bold text-cwd-blue tracking-tighter hover:opacity-80 transition">{t('logo')}</Link>
+        
+        <div className="flex items-center gap-4">
+          <div className="relative group">
+            <button className="flex items-center gap-2 border border-gray-300 px-4 py-1.5 rounded text-sm font-semibold transition-colors hover:bg-gray-50">
+              <div className="w-5 h-3 bg-cwd-blue opacity-20 rounded-sm" /> 
+              {langs[lang === 'en' ? 0 : lang === 'ru' ? 1 : 2]}
+              <ChevronDown />
+            </button>
+            <div className="absolute right-0 mt-1 w-40 bg-white border border-gray-200 rounded shadow-xl hidden group-hover:block z-50">
+              {langs.map((item, idx) => (
+                <button 
+                  key={idx} 
+                  onClick={() => setLang(['en','ru','kg'][idx])}
+                  className="w-full text-left px-4 py-2 hover:bg-gray-50 text-sm font-medium"
+                >
+                  {item}
+                </button>
+              ))}
+            </div>
+          </div>
+          {user ? (
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-medium">{user.name} ({user.role})</span>
+              {user.role === 'admin' && (
+                <Link to="/admin" className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-blue-700">
+                  Admin
+                </Link>
+              )}
+              <button 
+                onClick={logout}
+                className="bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-red-700"
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <Link to="/login" className="bg-cwd-blue text-white px-6 py-2 rounded-lg font-bold hover:bg-opacity-90">
+              Login
+            </Link>
+          )}
+        </div>
+      </div>
+
+      {user && (
+        <nav className="bg-cwd-blue text-white">
+          <div className="container mx-auto px-4 flex justify-center space-x-10 py-4 text-sm font-bold">
+            {navLinks.map((link) => (
+              <Link 
+                key={link} 
+                to={`/${link}`}
+                className="hover:opacity-80 transition-opacity uppercase tracking-wide"
+              >
+                {t(link)}
+              </Link>
+            ))}
+          </div>
+        </nav>
+      )}
+    </header>
+  );
+};
+
+export default Header;
+
+

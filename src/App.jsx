@@ -1,13 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useParams } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
+import RentalProvider from './context/RentalContext';
 import { LangProvider } from './context/LangContext';
-import { BookingProvider } from './components/BookingContext';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Login from './components/Login';
 import AdminDashboard from './components/AdminDashboard';
-import CarsList from './components/CarsList';
+import CarsPage from './components/CarsPage';
+import CarDetails from './components/CarDetails';
 import Offices from './components/Offices';
 import Contact from './components/Contact';
 import FAQ from './components/FAQ';
@@ -33,7 +34,7 @@ const StaticPageWrapper = () => {
 function AppContent() {
   return (
     <LangProvider>
-      <BookingProvider>
+      <RentalProvider>
         <Router>
           <div className="min-h-screen bg-white">
             <Header />
@@ -42,7 +43,8 @@ function AppContent() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/admin" element={<ProtectedRoute adminOnly><AdminDashboard /></ProtectedRoute>} />
                 <Route path="/" element={<ProtectedRoute><Hero /></ProtectedRoute>} />
-                <Route path="/cars" element={<ProtectedRoute><CarsList /></ProtectedRoute>} />
+                <Route path="/cars" element={<ProtectedRoute><CarsPage /></ProtectedRoute>} />
+                <Route path="/cars/:id" element={<ProtectedRoute><CarDetails /></ProtectedRoute>} />
                 <Route path="/offices" element={<ProtectedRoute><Offices /></ProtectedRoute>} />
                 <Route path="/contact" element={<ProtectedRoute><Contact /></ProtectedRoute>} />
                 <Route path="/faq" element={<ProtectedRoute><FAQ /></ProtectedRoute>} />
@@ -53,7 +55,7 @@ function AppContent() {
             <Footer />
           </div>
         </Router>
-      </BookingProvider>
+      </RentalProvider>
     </LangProvider>
   );
 }
@@ -63,5 +65,6 @@ function App() {
 }
 
 export default App;
+
 
 

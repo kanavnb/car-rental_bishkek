@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
-  const login = (email, password) => {
+const login = (email, password) => {
     // Fake auth
     if (email === 'admin@admin.com' && password === 'admin') {
       const adminUser = { id: 1, email, role: 'admin', name: 'Admin' };
@@ -28,12 +28,23 @@ export const AuthProvider = ({ children }) => {
       setUser(adminUser);
       return { success: true };
     } else if (email && password) {
-      const clientUser = { id: Math.random(), email, role: 'client', name: 'Client' };
+      const clientUser = { id: Math.random(), email, role: 'client', name: email.split('@')[0] };
       localStorage.setItem('user', JSON.stringify(clientUser));
       setUser(clientUser);
       return { success: true };
     }
-    return { success: false, error: 'Invalid credentials' };
+    return { success: false, error: 'Неверные данные' };
+  };
+
+  const register = (name, email, phone, password) => {
+    // Fake register - reuse login logic
+    const result = login(email, password);
+    if (result.success) {
+      const user = JSON.parse(localStorage.getItem('user'));
+      localStorage.setItem('user', JSON.stringify({ ...user, name }));
+      setUser({ ...user, name });
+    }
+    return result;
   };
 
   const logout = () => {

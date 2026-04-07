@@ -1,16 +1,58 @@
-# React + Vite
+# Car Rental Bishkek
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Professional car rental website for Bishkek and Kyrgyzstan.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Multi-language (EN/RU/KG)
+- Dynamic booking form w/ price calculation
+- Car catalog with filters, search, favorites
+- Car details page
+- Contact/FAQ/Offices pages
+- Admin panel
+- Responsive mobile-first design
+- TailwindCSS, React Router, Context API
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React 19
+- Vite
+- TailwindCSS
+- React Router DOM
+- Axios (API ready)
 
-## Expanding the ESLint configuration
+## Installation
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+npm install
+npm run dev
+```
+
+## Usage
+
+- Home: `/` - Search & hero
+- Cars: `/cars` - Catalog & filters
+- Details: `/cars/1`
+- Admin: `/admin` (login required)
+
+## Structure
+
+```
+src/
+├── pages/     # Page components
+├── components/ # Reusable UI
+├── context/   # State management
+├── services/  # API layer
+├── hooks/     # Custom hooks
+└── utils/
+```
+
+## Run
+
+```bash
+npm run dev  # http://localhost:5173
+npm run build # Production build
+npm run preview # Preview build
+```
+
+Production-ready car rental frontend.

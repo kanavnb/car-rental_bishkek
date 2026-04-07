@@ -60,18 +60,24 @@ const Login = () => {
           <div>
             <button
               type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-cwd-blue hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cwd-blue"
+              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-bold rounded-lg text-white bg-cwd-blue hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cwd-blue"
             >
-              {t('login')}
+              Войти
             </button>
           </div>
-          <div className="text-sm text-center">
-            <p>
+          <div className="text-center space-y-2">
+            <p className="text-xs text-gray-500">
               Admin: admin@admin.com / admin
             </p>
-            <p>
-              Client: any / any
+            <p className="text-xs text-gray-500">
+              Клиент: любой email / пароль
             </p>
+            <button
+              onClick={() => navigate('/register')}
+              className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg text-sm transition-colors"
+            >
+              Регистрация
+            </button>
           </div>
         </form>
       </div>

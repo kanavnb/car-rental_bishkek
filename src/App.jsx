@@ -14,6 +14,7 @@ import Contact from './components/Contact';
 import FAQ from './components/FAQ';
 import StaticPage from './components/StaticPage';
 import Footer from './components/Footer';
+import Register from "./components/Register"
 
 const ProtectedRoute = ({ children, adminOnly }) => {
   const { user, loading } = useAuth();
@@ -41,6 +42,7 @@ function AppContent() {
             <main>
               <Routes>
                 <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
                 <Route path="/admin" element={<ProtectedRoute adminOnly><AdminDashboard /></ProtectedRoute>} />
                 <Route path="/" element={<ProtectedRoute><Hero /></ProtectedRoute>} />
                 <Route path="/cars" element={<ProtectedRoute><CarsPage /></ProtectedRoute>} />

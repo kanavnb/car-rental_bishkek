@@ -15,7 +15,8 @@ const Login = () => {
     e.preventDefault();
     const result = await login(email, password);
     if (result.success) {
-      navigate(result.role === 'admin' ? '/admin' : '/');
+      const user = JSON.parse(localStorage.getItem('user'));
+      navigate(user.role === 'admin' ? '/admin' : '/');
     } else {
       setError(result.error);
     }

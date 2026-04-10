@@ -1,20 +1,11 @@
-# Car Rental Site Implementation TODO
+# Client Account Implementation TODO
 
-## Plan Steps (Frontend-only)
-- [ ] 1. Setup i18n (LangContext, translations)
-- [ ] 2. Update Constants.js (multi-lang, KG data)
-- [x] 3. Install deps (react-router-dom)
-- [x] 4. i18n Context + data (cars, offices, locations)
-- [x] 5. Update Constants + App (Router base) + Header (i18n, Links)
-- [x] All core features implemented: multilingual (EN/RU/KG), dynamic booking w/ calc, car list, offices, contact, FAQ, responsive nav/footer.
-- [x] 7. Offices + Footer i18n + routes updated
-Ready to test/complete.
-- [ ] 9. Update Footer i18n
-- [ ] 10. Add offices page
-- [ ] 11. Test & complete
-- [ ] 11. New Contact.jsx
-- [ ] 12. Update Footer.jsx
-- [ ] 13. Test lang switch, booking, nav
-- [ ] 14. Complete
+## Steps:
+- [x] 1. Create src/components/ClientDashboard.jsx (client dashboard with profile, fake bookings)
+- [x] 2. Fix Register.jsx: use register() instead of login() from useAuth
+- [x] 3. Update App.jsx: Add /account/* routes with ClientProtectedRoute
+- [x] 4. Update Header.jsx: Add "Account" link for client users
+- [x] 5. Test: Login as client, access /account, verify features
 
-Current: Deps installing...
+Progress tracked here. Each step checked after completion.
+

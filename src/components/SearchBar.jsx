@@ -5,15 +5,19 @@ import { useRental } from '../context/RentalContext';
 const SearchBar = () => {
   const { t } = useLang();
   const { updateFilters } = useRental();
+  const navigate = useNavigate();
   const [location, setLocation] = useState('');
   const [pickupDate, setPickupDate] = useState('');
   const [dropoffDate, setDropoffDate] = useState('');
 
   const handleSearch = (e) => {
     e.preventDefault();
-    // Update filters or navigate to cars page
-    updateFilters({ location });
-    // Could navigate or scroll to cars
+    updateFilters({ 
+      location,
+      pickupDate,
+      dropoffDate
+    });
+    navigate('/cars');
   };
 
   return (

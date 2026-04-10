@@ -20,31 +20,40 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
-const login = (email, password) => {
-    // Fake auth
-    if (email === 'admin@admin.com' && password === 'admin') {
-      const adminUser = { id: 1, email, role: 'admin', name: 'Admin' };
-      localStorage.setItem('user', JSON.stringify(adminUser));
-      setUser(adminUser);
-      return { success: true };
-    } else if (email && password) {
+const login = async (email, password) => {
+    // Strict validation
+    if (email === 'admin@admin.com') {
+      if (password === 'admin') {
+        const adminUser = { id: 1, email, role: 'admin', name: 'Admin' };
+        localStorage.setItem('user', JSON.stringify(adminUser));
+        setUser(adminUser);
+        return { success: true };
+      } else {
+        return { success: false, error: 'Неверный пароль для админа' };
+      }
+    } else if (email && password && password.length >= 3) {
       const clientUser = { id: Math.random(), email, role: 'client', name: email.split('@')[0] };
       localStorage.setItem('user', JSON.stringify(clientUser));
       setUser(clientUser);
       return { success: true };
+    } else {
+      return { success: false, error: 'Введите корректный email и пароль (минимум 3 символа)' };
     }
-    return { success: false, error: 'Неверные данные' };
   };
 
-  const register = (name, email, phone, password) => {
-    // Fake register - reuse login logic
-    const result = login(email, password);
-    if (result.success) {
-      const user = JSON.parse(localStorage.getItem('user'));
-      localStorage.setItem('user', JSON.stringify({ ...user, name }));
-      setUser({ ...user, name });
-    }
-    return result;
+  const register = async (name, email, phone, password) => {
+    // Fake register
+    const user = { 
+      id: Date.now(), 
+      name, 
+      email, 
+      phone, 
+      role: 'client',
+      registered: new Date().toISOString()
+    };
+    localStorage.setItem('user', JSON.stringify(user));
+    setUser(user);
+    return { success: true };
   };
 
   const logout = () => {
@@ -53,7 +62,7 @@ const login = (email, password) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading }}>
+    <AuthContext.Provider value={{ user, login, register, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );

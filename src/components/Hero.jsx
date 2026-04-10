@@ -1,5 +1,7 @@
 import React from 'react';
 import { useLang } from '../context/LangContext';
+import { useRental } from '../context/RentalContext';
+import { useNavigate } from 'react-router-dom';
 import { useBooking } from './BookingContext';
 import { cars } from '../data/cars';
 import { offices as locations } from '../data/offices';
@@ -14,14 +16,23 @@ const ChevronIcon = () => (
 
 const Hero = () => {
   const { t } = useLang();
-  const { booking, updateBooking, searchCars, TIME_SLOTS: slots } = useBooking();
-
+  const { booking, updateBooking, searchCars, TIME_SLOTS: slots } = useBooking(); 
+  const { updateFilters } = useRental();
+  const navigate = useNavigate();
+  
   const handleSearch = (e) => {
     e.preventDefault();
-    searchCars(cars);
+    // Update rental filters with booking
+    updateFilters({
+      pickupOffice: booking.pickup,
+      dropoffOffice: booking.dropoff,
+      pickupDate: booking.pickupDate,
+      dropoffDate: booking.dropoffDate
+    });
+    navigate('/cars');
   };
 
-  const today = new Date().toISOString().split('T')[0];
+  const today = new Date().toISOString().split('T')[0]; 
 
   return (
     <>

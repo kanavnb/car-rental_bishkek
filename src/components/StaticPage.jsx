@@ -43,13 +43,48 @@ const staticContent = {
 const StaticPage = ({ page }) => {
   const { lang } = useLang();
 
-  const content = staticContent[lang][page] || { title: 'Page Not Found', content: 'Content not available.' };
+  const pageContent = staticContent[lang][page];
+  if (!pageContent) {
+    return (
+      <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-blue-50 py-12 px-4">
+        <div className="max-w-md mx-auto text-center">
+          <div className="w-24 h-24 mx-auto mb-8 bg-gradient-to-r from-red-400 to-pink-500 rounded-3xl flex items-center justify-center shadow-2xl transform rotate-12">
+            <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <h1 className="text-5xl md:text-6xl font-black bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent mb-4">
+            404
+          </h1>
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
+            Страница не найдена
+          </h2>
+          <p className="text-xl text-gray-600 mb-12 max-w-md mx-auto leading-relaxed">
+            К сожалению, запрашиваемая страница не существует.
+          </p>
+          <div className="space-y-4">
+            <a href="/" className="block w-full bg-cwd-blue text-white font-bold py-4 px-8 rounded-xl text-lg hover:bg-opacity-90 shadow-lg transform hover:-translate-y-1 transition-all duration-200">
+              На главную
+            </a>
+            <div className="grid grid-cols-2 gap-4">
+              <a href="/cars" className="bg-white border-2 border-gray-200 text-gray-900 font-bold py-3 px-6 rounded-lg hover:bg-gray-50 shadow-md transition-all duration-200 text-sm">
+                Автомобили
+              </a>
+              <a href="/login" className="bg-green-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-700 shadow-md transition-all duration-200 text-sm">
+                Войти
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="container mx-auto px-4 py-20 max-w-4xl">
-      <h1 className="text-4xl font-extrabold mb-8 tracking-tight">{content.title}</h1>
+      <h1 className="text-4xl font-extrabold mb-8 tracking-tight">{pageContent.title}</h1>
       <div className="prose prose-lg max-w-none">
-        <p className="text-lg leading-relaxed mb-8">{content.content}</p>
+        <p className="text-lg leading-relaxed mb-8">{pageContent.content}</p>
         <p className="text-gray-600">For more details, contact our support team.</p>
       </div>
     </section>

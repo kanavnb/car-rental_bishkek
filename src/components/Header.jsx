@@ -50,6 +50,11 @@ const Header = () => {
                   Admin
                 </Link>
               )}
+              {user.role === 'client' && (
+                <Link to="/account" className="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-green-700">
+                  Личный кабинет
+                </Link>
+              )}
               <button 
                 onClick={logout}
                 className="bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-red-700"

@@ -13,7 +13,11 @@ const RentalProvider = ({ children }) => {
     type: [],
     transmission: [],
     fuel: [],
-    sort: 'price-asc'
+    sort: 'price-asc',
+    location: '',
+    pickupOffice: '',
+    pickupDate: '',
+    dropoffDate: ''
   });
   const [loading, setLoading] = useState(true);
   const [selectedCar, setSelectedCar] = useState(null);
@@ -24,12 +28,19 @@ const RentalProvider = ({ children }) => {
   const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
-    import('../data/cars').then(module => {
-      const rawCars = module.cars;
-      setCars(rawCars);
-      setFilteredCars(rawCars);
-      setLoading(false);
-    });
+    const savedCars = JSON.parse(localStorage.getItem('cars') || '[]');
+    if (savedCars.length > 0) {
+      setCars(savedCars);
+      setFilteredCars(savedCars);
+    } else {
+      import('../data/cars').then(module => {
+        const rawCars = module.cars;
+        setCars(rawCars);
+        setFilteredCars(rawCars);
+        localStorage.setItem('cars', JSON.stringify(rawCars));
+      });
+    }
+    setLoading(false);
   }, []);
 
   const applyFilters = useCallback((carsList = cars) => {
@@ -44,6 +55,12 @@ const RentalProvider = ({ children }) => {
         result = result.filter(car => filters[type].includes(car[type]));
       }
     });
+
+    // Search dates - calculate days for display, assume all cars active/available
+    if (filters.pickupDate && filters.dropoffDate) {
+      const days = Math.ceil((new Date(filters.dropoffDate) - new Date(filters.pickupDate)) / (1000 * 60 * 60 * 24));
+      console.log(`Search ${days} days: ${filters.pickupDate} to ${filters.dropoffDate}`);
+    }
 
     // Sort
     if (filters.sort === 'price-asc') {
@@ -76,6 +93,10 @@ const RentalProvider = ({ children }) => {
     const days = Math.ceil((new Date(booking.dates.dropoff) - new Date(booking.dates.pickup)) / (1000 * 60 * 60 * 24));
     return days * selectedCar.price;
   };
+
+  useEffect(() => {
+    localStorage.setItem('cars', JSON.stringify(cars));
+  }, [cars]);
 
   const value = {
     cars, setCars, filteredCars, filters, updateFilters, loading, selectedCar, setSelectedCar,

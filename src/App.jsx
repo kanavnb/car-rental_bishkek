@@ -15,6 +15,7 @@ import FAQ from './components/FAQ';
 import StaticPage from './components/StaticPage';
 import Footer from './components/Footer';
 import Register from "./components/Register"
+import ClientDashboard from './components/ClientDashboard';
 
 const ProtectedRoute = ({ children, adminOnly }) => {
   const { user, loading } = useAuth();
@@ -23,6 +24,17 @@ const ProtectedRoute = ({ children, adminOnly }) => {
 
   if (!user) return <Navigate to="/login" />;
   if (adminOnly && user.role !== 'admin') return <Navigate to="/" />;
+
+  return children;
+};
+
+const ClientProtectedRoute = ({ children }) => {
+  const { user, loading } = useAuth();
+
+  if (loading) return <div>Loading...</div>;
+
+  if (!user) return <Navigate to="/login" />;
+  if (user.role === 'admin') return <Navigate to="/admin" />;
 
   return children;
 };
@@ -44,6 +56,7 @@ function AppContent() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/admin/*" element={<ProtectedRoute adminOnly><AdminDashboard /></ProtectedRoute>} />
+                <Route path="/account/*" element={<ClientProtectedRoute><ClientDashboard /></ClientProtectedRoute>} />
                 <Route path="/" element={<ProtectedRoute><Hero /></ProtectedRoute>} />
                 <Route path="/cars" element={<ProtectedRoute><CarsPage /></ProtectedRoute>} />
                 <Route path="/cars/:id" element={<ProtectedRoute><CarDetails /></ProtectedRoute>} />

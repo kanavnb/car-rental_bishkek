@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { useLang } from '../context/LangContext';
+
 import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
-  const { login } = useAuth(); // Reuse login as register for demo
-  const { t } = useLang();
+  const { register } = useAuth();
+
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
@@ -22,11 +22,12 @@ const Register = () => {
       setError('Пароли не совпадают');
       return;
     }
-    const result = await login(formData.email, formData.password);
+    // Use register method from auth context
+    const result = await register(formData.name, formData.email, formData.phone, formData.password);
     if (result.success) {
       navigate('/');
     } else {
-      setError(result.error);
+      setError(result.error || 'Ошибка регистрации');
     }
   };
 
@@ -49,7 +50,7 @@ const Register = () => {
               value={formData.name}
               onChange={(e) => setFormData({...formData, name: e.target.value})}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cwd-blue focus:border-transparent" 
-              placeholder="Иван Иванов"
+              placeholder="Камилов Канатбек"
               required
             />
           </div>

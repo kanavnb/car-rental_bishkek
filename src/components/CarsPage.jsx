@@ -4,7 +4,7 @@ import Filters from './Filters';
 import CarCard from './CarCard';
 
 const CarsPage = () => {
-  const { filteredCars, loading } = useRental();
+  const { filteredCars, filters, loading } = useRental();
 
   if (loading) {
     return (
@@ -38,10 +38,25 @@ const CarsPage = () => {
           
           <main className="flex-1">
             <div className="mb-8">
-              <h1 className="text-4xl font-bold text-gray-900 mb-2">Cars for rent</h1>
-              <p className="text-xl text-gray-600">
-                {filteredCars.length} cars available
-              </p>
+              <div className="filters-header mb-6 p-4 bg-white rounded-2xl shadow-lg">
+                {filters.pickupDate && filters.dropoffDate ? (
+                  <div>
+                    <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                      Active cars available {filters.pickupDate} - {filters.dropoffDate}
+                    </h1>
+                    <p className="text-lg text-gray-600">
+                      {filteredCars.length} cars found for your search
+                    </p>
+                  </div>
+                ) : (
+                  <>
+                    <h1 className="text-4xl font-bold text-gray-900 mb-2">Cars for rent</h1>
+                    <p className="text-xl text-gray-600">
+                      {filteredCars.length} cars available
+                    </p>
+                  </>
+                )}
+              </div>
             </div>
             
             {filteredCars.length === 0 ? (

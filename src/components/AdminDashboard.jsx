@@ -1,75 +1,73 @@
 import React from 'react';
+import { Link, Routes, Route } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { useLang } from '../context/LangContext';
+import { useRental } from '../context/RentalContext';
+import ManageCars from './ManageCars';
 
 const AdminDashboard = () => {
   const { user, logout } = useAuth();
-  const { t } = useLang();
+  const { cars } = useRental();
 
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white shadow">
         <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
-          <p className="mt-1 text-sm text-gray-500">Welcome, {user.name}</p>
-        </div>
-      </header>
-      <main>
-        <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-          <div className="px-4 py-6 sm:px-0">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="bg-white overflow-hidden shadow rounded-lg">
-                <div className="p-5">
-                  <div className="flex items-center">
-                    <div className="ml-5 w-0 flex-1">
-                      <dl>
-                        <dt className="text-sm font-medium text-gray-500 truncate">Bookings</dt>
-                        <dd>
-                          <div className="text-lg font-medium text-gray-900">12</div>
-                        </dd>
-                      </dl>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-white overflow-hidden shadow rounded-lg">
-                <div className="p-5">
-                  <div className="flex items-center">
-                    <div className="ml-5 w-0 flex-1">
-                      <dl>
-                        <dt className="text-sm font-medium text-gray-500 truncate">Cars</dt>
-                        <dd>
-                          <div className="text-lg font-medium text-gray-900">45</div>
-                        </dd>
-                      </dl>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-white overflow-hidden shadow rounded-lg">
-                <div className="p-5">
-                  <div className="flex items-center">
-                    <div className="ml-5 w-0 flex-1">
-                      <dl>
-                        <dt className="text-sm font-medium text-gray-500 truncate">Users</dt>
-                        <dd>
-                          <div className="text-lg font-medium text-gray-900">127</div>
-                        </dd>
-                      </dl>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="mt-8">
+          <div className="flex justify-between items-center">
+            <h1 className="text-3xl font-bold text-gray-900">Панель администратора</h1>
+            <div className="flex items-center space-x-4">
+              <span className="text-sm text-gray-500">Привет, {user.name}</span>
               <button
                 onClick={logout}
-                className="bg-red-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-red-700"
+                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-bold transition-colors"
               >
-                Logout
+                Выход
               </button>
             </div>
           </div>
+        </div>
+      </header>
+
+      <nav className="bg-white border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex space-x-8">
+            <Link to="/admin/cars" className="text-lg font-medium text-gray-900 py-4 px-1 border-b-2 border-cwd-blue">
+              Автомобили ({cars.length})
+            </Link>
+            <Link to="/admin/bookings" className="text-lg font-medium text-gray-700 hover:text-gray-900 py-4 px-1 border-b-2 border-transparent">
+              Бронирования (12)
+            </Link>
+            <Link to="/admin/users" className="text-lg font-medium text-gray-700 hover:text-gray-900 py-4 px-1 border-b-2 border-transparent">
+              Пользователи (127)
+            </Link>
+          </div>
+        </div>
+      </nav>
+
+      <main>
+        <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+          <Routes>
+            <Route path="/cars" element={<ManageCars />} />
+            <Route path="/" element={
+              <div className="px-4 py-6 sm:px-0">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                  <div className="bg-white overflow-hidden shadow rounded-lg p-6">
+                    <dt className="text-sm font-medium text-gray-500 mb-2">Автомобили</dt>
+                    <dd className="text-3xl font-bold text-gray-900">{cars.length}</dd>
+                  </div>
+                  <div className="bg-white overflow-hidden shadow rounded-lg p-6">
+                    <dt className="text-sm font-medium text-gray-500 mb-2">Бронирования</dt>
+                    <dd className="text-3xl font-bold text-gray-900">12</dd>
+                  </div>
+                  <div className="bg-white overflow-hidden shadow rounded-lg p-6">
+                    <dt className="text-sm font-medium text-gray-500 mb-2">Пользователи</dt>
+                    <dd className="text-3xl font-bold text-gray-900">127</dd>
+                  </div>
+                </div>
+              </div>
+            } />
+            <Route path="/bookings" element={<div>Bookings page coming soon</div>} />
+            <Route path="/users" element={<div>Users page coming soon</div>} />
+          </Routes>
         </div>
       </main>
     </div>
@@ -77,4 +75,5 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
+
 

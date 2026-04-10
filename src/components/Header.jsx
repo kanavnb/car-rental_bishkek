@@ -18,7 +18,10 @@ const Header = () => {
   return (
     <header className="w-full bg-white sticky top-0 z-50 shadow-sm">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <Link to={user ? '/' : '/login'} className="text-4xl font-bold text-cwd-blue tracking-tighter hover:opacity-80 transition">{t('logo')}</Link>
+        <Link to={user ? '/' : '/login'} className="flex items-center gap-3">
+          <img src="/logo.png" alt="CWD" className="h-12 w-12 object-contain" />
+          <span className="text-3xl font-bold text-cwd-blue tracking-tighter">{t('logo')}</span>
+        </Link>
         
         <div className="flex items-center gap-4">
           <div className="relative group">

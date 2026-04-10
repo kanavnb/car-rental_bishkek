@@ -24,9 +24,12 @@ const RentalProvider = ({ children }) => {
   const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
-    setCars(rawCars);
-    setFilteredCars(rawCars);
-    setLoading(false);
+    import('../data/cars').then(module => {
+      const rawCars = module.cars;
+      setCars(rawCars);
+      setFilteredCars(rawCars);
+      setLoading(false);
+    });
   }, []);
 
   const applyFilters = useCallback((carsList = cars) => {
@@ -34,7 +37,7 @@ const RentalProvider = ({ children }) => {
 
     // Price filter
     result = result.filter(car => car.price >= filters.price[0] && car.price <= filters.price[1]);
-
+    
     // Type, transmission, fuel filters
     ['type', 'transmission', 'fuel'].forEach(type => {
       if (filters[type].length > 0) {
@@ -75,7 +78,7 @@ const RentalProvider = ({ children }) => {
   };
 
   const value = {
-    cars, filteredCars, filters, updateFilters, loading, selectedCar, setSelectedCar,
+    cars, setCars, filteredCars, filters, updateFilters, loading, selectedCar, setSelectedCar,
     booking, setBooking, calculateTotal, toggleFavorite, favorites
   };
 

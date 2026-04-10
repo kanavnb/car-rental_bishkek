@@ -43,7 +43,7 @@ function AppContent() {
               <Routes>
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                <Route path="/admin" element={<ProtectedRoute adminOnly><AdminDashboard /></ProtectedRoute>} />
+                <Route path="/admin/*" element={<ProtectedRoute adminOnly><AdminDashboard /></ProtectedRoute>} />
                 <Route path="/" element={<ProtectedRoute><Hero /></ProtectedRoute>} />
                 <Route path="/cars" element={<ProtectedRoute><CarsPage /></ProtectedRoute>} />
                 <Route path="/cars/:id" element={<ProtectedRoute><CarDetails /></ProtectedRoute>} />
@@ -67,6 +67,7 @@ function App() {
 }
 
 export default App;
+
 
 
 

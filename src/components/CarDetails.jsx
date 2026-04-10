@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useRental } from '../context/RentalContext';
 import { useLang } from '../context/LangContext';
+import HeartIcon from './icons/HeartIcon';
 import BookingModal from './BookingModal';
 
 const CarDetails = () => {
@@ -55,7 +56,7 @@ const CarDetails = () => {
                 onClick={() => toggleFavorite(selectedCar.id)}
                 className="absolute top-4 right-4 p-3 bg-white/90 hover:bg-white rounded-2xl shadow-lg transition-all"
               >
-                <Heart className={`w-6 h-6 ${isFavorite ? 'fill-red-500 text-red-500' : 'text-gray-600'}`} />
+                <HeartIcon className={`w-6 h-6 ${isFavorite ? 'fill-red-500 stroke-red-500' : 'stroke-gray-600'}`} />
               </button>
             </div>
             <div className="grid grid-cols-3 gap-3 mt-6">
@@ -88,11 +89,11 @@ const CarDetails = () => {
                   </div>
                   <div className="flex justify-between">
                     <span>Transmission:</span>
-                    <span>{selectedCar.transmission.toUpperCase()}</span>
+                    <span>{(selectedCar.transmission || '').toUpperCase()}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Fuel:</span>
-                    <span>{selectedCar.fuel.toUpperCase()}</span>
+                    <span>{(selectedCar.fuel || '').toUpperCase()}</span>
                   </div>
                 </div>
               </div>
@@ -126,4 +127,5 @@ const CarDetails = () => {
 };
 
 export default CarDetails;
+
 

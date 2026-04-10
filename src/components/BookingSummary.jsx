@@ -16,15 +16,15 @@ const BookingSummary = () => {
         <div>
           <h3 className="font-bold text-xl mb-4">Booking Details</h3>
           <ul className="space-y-2 text-sm">
-            <li>Pickup: Almaty Airport • {booking.pickupDate} {booking.pickupTime}</li>
-            <li>Dropoff: Almaty City • {booking.dropoffDate} {booking.dropoffTime}</li>
+            <li>Pickup: Bishkek Airport • {booking.pickupDate} {booking.pickupTime}</li>
+            <li>Dropoff: Bishkek City • {booking.dropoffDate} {booking.dropoffTime}</li>
             <li>Days: {booking.days}</li>
           </ul>
         </div>
         <div>
           <h3 className="font-bold text-xl mb-4">Available Cars ({searchResults.length})</h3>
           <div className="space-y-3">
-            {searchResults.slice(0,3).map(car => (
+            {searchResults.map(car => (
               <div key={car.id} className="flex justify-between items-center p-3 bg-white rounded-lg">
                 <span>{car.model.en}</span>
                 <span>${calcPrice(car.price)}</span>

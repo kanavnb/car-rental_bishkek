@@ -1,7 +1,8 @@
 import React from 'react';
 import { useLang } from '../context/LangContext';
 import { useBooking } from './BookingContext';
-import { locations, cars } from '../data/cars';
+import { cars } from '../data/cars';
+import { offices as locations } from '../data/offices';
 import BookingSummary from './BookingSummary';
 import { TIME_SLOTS } from '../Constants';
 

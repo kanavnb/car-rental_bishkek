@@ -32,8 +32,14 @@ const login = async (email, password) => {
         return { success: false, error: 'Неверный пароль для админа' };
       }
     } else if (email && password && password.length >= 3) {
-      const clientUser = { id: Math.random(), email, role: 'client', name: email.split('@')[0] };
+      const clientUser = { id: Math.random(), email, role: 'client', name: email.split('@')[0], registered: new Date().toISOString() };
       localStorage.setItem('user', JSON.stringify(clientUser));
+      // Add to global users list
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      if (!users.find(u => u.email === email)) {
+        users.push(clientUser);
+        localStorage.setItem('users', JSON.stringify(users));
+      }
       setUser(clientUser);
       return { success: true };
     } else {
@@ -52,6 +58,12 @@ const login = async (email, password) => {
       registered: new Date().toISOString()
     };
     localStorage.setItem('user', JSON.stringify(user));
+    // Add to global users list
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    if (!users.find(u => u.email === email)) {
+      users.push(user);
+      localStorage.setItem('users', JSON.stringify(users));
+    }
     setUser(user);
     return { success: true };
   };

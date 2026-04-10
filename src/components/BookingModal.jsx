@@ -22,12 +22,23 @@ const BookingModal = ({ car, onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setBooking({
-      car,
+    const bookingData = {
+      id: Date.now(),
+      carId: car.id,
+      car: car.model.en,
       dates: { pickup: pickupDate, dropoff: dropoffDate },
       customer: { name, phone },
-      total
-    });
+      total,
+      status: 'Подтверждено',
+      createdAt: new Date().toISOString()
+    };
+    setBooking(bookingData);
+    
+    // Save to global bookings
+    const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+    bookings.push(bookingData);
+    localStorage.setItem('bookings', JSON.stringify(bookings));
+    
     setSubmitted(true);
     setTimeout(() => {
       onClose();

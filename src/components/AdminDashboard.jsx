@@ -3,6 +3,8 @@ import { Link, Routes, Route } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useRental } from '../context/RentalContext';
 import ManageCars from './ManageCars';
+import AdminBookings from './AdminBookings';
+import AdminUsers from './AdminUsers';
 
 const AdminDashboard = () => {
   const { user, logout } = useAuth();
@@ -34,10 +36,10 @@ const AdminDashboard = () => {
               Автомобили ({cars.length})
             </Link>
             <Link to="/admin/bookings" className="text-lg font-medium text-gray-700 hover:text-gray-900 py-4 px-1 border-b-2 border-transparent">
-              Бронирования (12)
+              Бронирования (1)
             </Link>
             <Link to="/admin/users" className="text-lg font-medium text-gray-700 hover:text-gray-900 py-4 px-1 border-b-2 border-transparent">
-              Пользователи (127)
+              Пользователи (1)
             </Link>
           </div>
         </div>
@@ -56,17 +58,17 @@ const AdminDashboard = () => {
                   </div>
                   <div className="bg-white overflow-hidden shadow rounded-lg p-6">
                     <dt className="text-sm font-medium text-gray-500 mb-2">Бронирования</dt>
-                    <dd className="text-3xl font-bold text-gray-900">12</dd>
+                    <dd className="text-3xl font-bold text-gray-900">{JSON.parse(localStorage.getItem('bookings') || '[]').length}</dd>
                   </div>
                   <div className="bg-white overflow-hidden shadow rounded-lg p-6">
                     <dt className="text-sm font-medium text-gray-500 mb-2">Пользователи</dt>
-                    <dd className="text-3xl font-bold text-gray-900">127</dd>
+                    <dd className="text-3xl font-bold text-gray-900">{JSON.parse(localStorage.getItem('users') || '[]').length || 1}</dd>
                   </div>
                 </div>
               </div>
             } />
-            <Route path="/bookings" element={<div>Bookings page coming soon</div>} />
-            <Route path="/users" element={<div>Users page coming soon</div>} />
+<Route path="/bookings" element={<AdminBookings />} />
+            <Route path="/users" element={<AdminUsers />} />
           </Routes>
         </div>
       </main>

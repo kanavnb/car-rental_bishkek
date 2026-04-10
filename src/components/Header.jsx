@@ -26,7 +26,7 @@ const Header = () => {
         <div className="flex items-center gap-4">
           <div className="relative group">
             <button className="flex items-center gap-2 border border-gray-300 px-4 py-1.5 rounded text-sm font-semibold transition-colors hover:bg-gray-50">
-              <div className="w-5 h-3 bg-cwd-blue opacity-20 rounded-sm" /> 
+              <img src={`https://flagcdn.com/16x12/${lang === 'en' ? 'gb' : lang === 'ru' ? 'ru' : 'kg'}.png`} alt="" className="rounded-sm" /> 
               {langs[lang === 'en' ? 0 : lang === 'ru' ? 1 : 2]}
               <ChevronDown />
             </button>

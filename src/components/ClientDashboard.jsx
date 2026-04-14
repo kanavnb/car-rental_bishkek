@@ -54,6 +54,9 @@ const ClientDashboard = () => {
             <Link to="/account/bookings" className="text-lg font-medium text-gray-700 hover:text-gray-900 py-4 px-1 border-b-2 border-transparent">
               Мои бронирования ({bookings.length})
             </Link>
+            <Link to="/cancel-booking" className="text-lg font-medium text-red-600 hover:text-red-700 py-4 px-1 border-b-2 border-transparent font-bold">
+              Отменить бронирование
+            </Link>
           </div>
         </div>
       </nav>

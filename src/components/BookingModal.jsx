@@ -29,7 +29,7 @@ const BookingModal = ({ car, onClose }) => {
       dates: { pickup: pickupDate, dropoff: dropoffDate },
       customer: { name, phone },
       total,
-      status: 'Подтверждено',
+      status: 'pending',
       createdAt: new Date().toISOString()
     };
     setBooking(bookingData);

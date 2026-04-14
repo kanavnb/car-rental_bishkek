@@ -36,10 +36,10 @@ const AdminDashboard = () => {
               Автомобили ({cars.length})
             </Link>
             <Link to="/admin/bookings" className="text-lg font-medium text-gray-700 hover:text-gray-900 py-4 px-1 border-b-2 border-transparent">
-              Бронирования (1)
+              Бронирования ({JSON.parse(localStorage.getItem('bookings') || '[]').length})
             </Link>
             <Link to="/admin/users" className="text-lg font-medium text-gray-700 hover:text-gray-900 py-4 px-1 border-b-2 border-transparent">
-              Пользователи (1)
+              Пользователи ({JSON.parse(localStorage.getItem('users') || '[]').length})
             </Link>
           </div>
         </div>

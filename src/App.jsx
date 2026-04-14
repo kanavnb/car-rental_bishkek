@@ -16,6 +16,7 @@ import StaticPage from './components/StaticPage';
 import Footer from './components/Footer';
 import Register from "./components/Register"
 import ClientDashboard from './components/ClientDashboard';
+import CancelBooking from './components/CancelBooking';
 
 const ProtectedRoute = ({ children, adminOnly }) => {
   const { user, loading } = useAuth();
@@ -39,10 +40,7 @@ const ClientProtectedRoute = ({ children }) => {
   return children;
 };
 
-const StaticPageWrapper = () => {
-  const params = useParams();
-  return <StaticPage page={params.page} />;
-};
+const StaticPageWrapper = ({ page }) => <StaticPage page={page} />;
 
 function AppContent() {
   return (
@@ -63,8 +61,10 @@ function AppContent() {
                 <Route path="/offices" element={<ProtectedRoute><Offices /></ProtectedRoute>} />
                 <Route path="/contact" element={<ProtectedRoute><Contact /></ProtectedRoute>} />
                 <Route path="/faq" element={<ProtectedRoute><FAQ /></ProtectedRoute>} />
+                <Route path="/cancel-booking" element={<ProtectedRoute><CancelBooking /></ProtectedRoute>} />
+                <Route path="/account/modify-booking" element={<ProtectedRoute><StaticPage page="modifyBooking" /></ProtectedRoute>} />
                 <Route path="/:page" element={<ProtectedRoute><StaticPageWrapper /></ProtectedRoute>} />
-                <Route path="*" element={<Navigate to="/login" />} />
+                <Route path="*" element={<Navigate to="/" />} />
               </Routes>
             </main>
             <Footer />
